@@ -7,7 +7,7 @@ ENV VIRTUAL_ENV=/.venv PATH="/.venv/bin:$PATH"
 COPY --from=uv /uv /uv
 COPY README.md pyproject.toml src /
 
-RUN --mount=type=cache,target=/root/.cache/uv \
+RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
     --mount=from=uv,source=/uv,target=/uv \
     /uv venv /.venv && /uv pip install -e .[all] \
     && rm -rf README.md pyproject.toml src
